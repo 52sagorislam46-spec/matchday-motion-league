@@ -17,7 +17,9 @@ describe("match rules", () => {
   it("match ends when time runs out", () => {
     const m = new Match({ home: TEAMS[0], away: TEAMS[1], minutes: 3 });
     const inp = createInput();
-    for (let i = 0; i < 180 * 20 + 10; i++) m.tick(0.05, inp);
+    // clock pauses during goal celebrations, so run until it stops
+    for (let i = 0; i < 20000 && m.phase !== "ended"; i++) m.tick(0.05, inp);
     expect(m.phase).toBe("ended");
+    expect(m.timeLeft).toBe(0);
   });
 });
