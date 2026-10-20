@@ -51,7 +51,7 @@ function crowdTexture() {
   g.fillStyle = "#2a2f3a"; g.fillRect(0, 0, 1024, 128);
   const cols = ["#d94a3a", "#f2d24a", "#e8e8e8", "#3a6ad9", "#2fa35a", "#1a1a1a", "#e8823a"];
   for (let y = 4; y < 128; y += 8) for (let x = 2; x < 1024; x += 6) {
-    g.fillStyle = cols[(Math.random() * cols.length) | 0];
+    g.fillStyle = cols[(Math.random() * cols.length) | 0]!;
     g.fillRect(x + Math.random() * 2, y + Math.random() * 2, 4, 5);
   }
   const t = new THREE.CanvasTexture(c);
