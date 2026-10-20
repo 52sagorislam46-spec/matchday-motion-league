@@ -46,8 +46,8 @@ function TeamPicker({ label, value, onChange, disabled }: { label: string; value
 }
 
 function Index() {
-  const [home, setHome] = useState<Team>(TEAMS[0]);
-  const [away, setAway] = useState<Team>(TEAMS[1]);
+  const [home, setHome] = useState<Team>(TEAMS[0]!);
+  const [away, setAway] = useState<Team>(TEAMS[1]!);
   const [minutes, setMinutes] = useState<3 | 6>(3);
   const [playing, setPlaying] = useState(false);
   const [round, setRound] = useState(0);

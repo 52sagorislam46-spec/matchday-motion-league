@@ -139,7 +139,7 @@ export class Match {
 
   private stepPlayers(dt: number, inp: Input, frozen: boolean) {
     const b = this.ball;
-    const ownerTeam = b.owner !== null ? this.players[b.owner].team : null;
+    const ownerTeam = b.owner !== null ? this.players[b.owner]!.team : null;
     // human control switching
     this.switchCd -= dt;
     if (inp.switch) {
@@ -150,7 +150,7 @@ export class Match {
     }
     if (!frozen && ownerTeam !== this.userTeam && this.switchCd <= 0) {
       const n = this.nearestTo(this.userTeam, b.x, b.z);
-      const c = this.players[this.controlled];
+      const c = this.players[this.controlled]!;
       if (dist(c.x, c.z, b.x, b.z) > dist(n.x, n.z, b.x, b.z) + 7) {
         this.controlled = n.id;
         this.switchCd = 1;
@@ -214,7 +214,7 @@ export class Match {
     const s = this.dir(p.team);
     const oppGoalX = PITCH.halfL * s;
     const team = this.teams[p.team];
-    const ownerTeam = b.owner !== null ? this.players[b.owner].team : null;
+    const ownerTeam = b.owner !== null ? this.players[b.owner]!.team : null;
     const to = (tx: number, tz: number, sp: number): [number, number] => {
       const dx = tx - p.x, dz = tz - p.z, d = Math.hypot(dx, dz);
       if (d < 0.4) return [0, 0];
@@ -246,7 +246,7 @@ export class Match {
 
     if (isChaser) {
       if (ownerTeam !== null && ownerTeam !== p.team) {
-        const o = this.players[b.owner!];
+        const o = this.players[b.owner!]!;
         if (dist(p.x, p.z, o.x, o.z) < 1.9 && p.aiCd <= 0) {
           p.aiCd = 0.9;
           if (this.rng() < 0.3 + team.skill * 0.25) this.tackle(p);
@@ -313,7 +313,7 @@ export class Match {
     p.facing = Math.atan2(b.x - p.x, b.z - p.z);
     p.vx = Math.sin(p.facing) * 10; p.vz = Math.cos(p.facing) * 10;
     if (b.owner === null) return;
-    const v = this.players[b.owner];
+    const v = this.players[b.owner]!;
     if (v.team === p.team || dist(p.x, p.z, v.x, v.z) > 2.2) return;
     let result: "clean" | "foul" = "clean";
     for (const r of this.rules) { const o = r.resolveTackle?.(this, p, v); if (o) { result = o; break; } }
@@ -329,7 +329,7 @@ export class Match {
     const b = this.ball;
     b.cooldown -= dt;
     if (b.owner !== null) {
-      const p = this.players[b.owner];
+      const p = this.players[b.owner]!;
       b.x = p.x + Math.sin(p.facing) * 0.75;
       b.z = p.z + Math.cos(p.facing) * 0.75;
       b.y = BALL_R; b.vx = p.vx; b.vz = p.vz; b.vy = 0;

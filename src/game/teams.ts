@@ -9,4 +9,4 @@ export const TEAMS: Team[] = [
   { id: "esp", name: "স্পেন", short: "ESP", shirt: "#c41b25", shorts: "#14234f", gk: "#7f3fbf", speed: 1.0, skill: 0.83 },
 ];
 
-export const teamById = (id: string) => TEAMS.find((t) => t.id === id) ?? TEAMS[0];
+export const teamById = (id: string) => TEAMS.find((t) => t.id === id) ?? TEAMS[0]!;
