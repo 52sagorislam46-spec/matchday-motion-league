@@ -7,7 +7,7 @@ const SKINS = ["#f1c9a5", "#d9a47a", "#a8724a", "#6e4528", "#e8b98f"];
 const HAIR = ["#1a1208", "#3b2412", "#0d0d0d", "#6b4a22", "#d9b25a"];
 
 export function PlayerMesh({ match, id }: { match: Match; id: number }) {
-  const p0 = match.players[id];
+  const p0 = match.players[id]!;
   const team = match.teams[p0.team];
   const root = useRef<THREE.Group>(null);
   const body = useRef<THREE.Group>(null);
@@ -23,15 +23,15 @@ export function PlayerMesh({ match, id }: { match: Match; id: number }) {
     return {
       shirt: new THREE.MeshStandardMaterial({ color: shirt, roughness: 0.7 }),
       shorts: new THREE.MeshStandardMaterial({ color: team.shorts, roughness: 0.8 }),
-      skin: new THREE.MeshStandardMaterial({ color: SKINS[id % SKINS.length], roughness: 0.6 }),
-      hair: new THREE.MeshStandardMaterial({ color: HAIR[(id * 7) % HAIR.length], roughness: 0.9 }),
+      skin: new THREE.MeshStandardMaterial({ color: SKINS[id % SKINS.length]!, roughness: 0.6 }),
+      hair: new THREE.MeshStandardMaterial({ color: HAIR[(id * 7) % HAIR.length]!, roughness: 0.9 }),
       sock: new THREE.MeshStandardMaterial({ color: shirt, roughness: 0.8 }),
       boot: new THREE.MeshStandardMaterial({ color: "#151515", roughness: 0.4 }),
     };
   }, [id, p0.role, team]);
 
   useFrame((_, d) => {
-    const p = match.players[id];
+    const p = match.players[id]!;
     const r = root.current!;
     r.visible = p.active;
     r.position.set(p.x, 0, p.z);

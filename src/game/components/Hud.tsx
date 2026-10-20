@@ -61,12 +61,12 @@ export function Hud({ match, onExit }: { match: Match; onExit: () => void }) {
   const [h, a] = match.teams;
   const last = match.events.at(-1);
   const sinceLast = last ? match.duration - match.timeLeft - last.t : 99;
-  const ctl = match.players[match.controlled];
+  const ctl = match.players[match.controlled]!;
 
   let banner: string | null = null;
   if (match.phase === "goal") banner = `গোল! ${match.teams[last?.team ?? 0].name}`;
   else if (last?.type === "out" && sinceLast < 1.5)
-    banner = ({ corner: "কর্নার", goalkick: "গোল কিক", throwin: "থ্রো-ইন" } as Record<string, string>)[String(last.data?.kind)] ?? null;
+    banner = ({ corner: "কর্নার", goalkick: "গোল কিক", throwin: "থ্রো-ইন" } as Record<string, string>)[String(last.data?.["kind"])] ?? null;
   else if (match.phase === "kickoff") banner = "কিক-অফ";
 
   return (
